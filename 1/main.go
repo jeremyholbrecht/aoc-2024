@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"log"
-	"math"
 	"os"
 	"slices"
 	"strconv"
@@ -54,11 +53,31 @@ func main() {
 	slices.Sort(list1)
 	slices.Sort(list2)
 
-	var result float64
+	// using math.Abs() which requires a float resulted in result displaying a not so usuable result (3.508942e+06)
+	// using int and writing your own absolute function solves this
+	/*
+		var result float64
+		for i := 0; i < len(list1); i++ {
+			result += (math.Abs(float64(list1[i]) - float64(list2[i])))
+		}
+
+	*/
+
+	var result int
+
 	for i := 0; i < len(list1); i++ {
-		result += (math.Abs(float64(list1[i]) - float64(list2[i])))
+		result += absolute(list1[i] - list2[i])
+
 	}
 
 	fmt.Println(result)
 
+}
+
+// return a positive number if number is negative
+func absolute(number int) int {
+	if number < 0 {
+		return -number
+	}
+	return number
 }
